@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <p>Login olmuş</p>
+}
+else
+{
+    <p>Login değil</p>
+}
