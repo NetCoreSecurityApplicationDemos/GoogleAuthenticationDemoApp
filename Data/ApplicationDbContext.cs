@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using GoogleAuthenticationDemoApp.Model;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoogleAuthenticationDemoApp.Data
@@ -9,5 +10,9 @@ namespace GoogleAuthenticationDemoApp.Data
             : base(options)
         {
         }
+
+
+        public DbSet<Product> Products { get; set; }   
+
     }
 }
