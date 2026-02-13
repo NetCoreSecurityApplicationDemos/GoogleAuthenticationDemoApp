@@ -21,6 +21,7 @@ namespace GoogleAuthenticationDemoApp
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddSwaggerGen();
             //Authentication
             builder.Services.AddAuthentication().AddGoogle(GoogleOptions =>
             {
@@ -49,6 +50,10 @@ namespace GoogleAuthenticationDemoApp
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+
+                app.UseSwagger();
+                app.UseSwaggerUI();
+                //app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "Swagger"));
                 app.UseMigrationsEndPoint();
             }
             else
