@@ -2,6 +2,8 @@ using GoogleAuthenticationDemoApp.Data;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
+using Scalar.AspNetCore;
 
 namespace GoogleAuthenticationDemoApp
 {
@@ -22,6 +24,32 @@ namespace GoogleAuthenticationDemoApp
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddSwaggerGen();
+            builder.Services.AddOpenApi(options =>
+            {
+                options.AddDocumentTransformer((document,context,cancellationtoken) =>
+                {
+                    document.Info.Version = "10.0";
+                    document.Info.Title = "Demo Volkan Tolkan API";
+                    document.Info.Description = "Bunu yazan  tosun okuyana kosun !!!";
+                    document.Info.TermsOfService = new Uri("https://a@b.com");
+
+                    document.Info.Contact = new OpenApiContact
+                    {
+                        Name = "Volkan Genç",
+                        Email = "gencvolkan@gmail.com",
+                        Url = new Uri("https://a@b.com")
+                    };
+                    document.Info.License = new OpenApiLicense
+                    {
+                        Name = "MIT License",
+                        Url = new Uri("https://opensource.org/licenses/MIT")
+                    }; 
+
+                    return Task.CompletedTask;
+
+                });
+
+            });
             //Authentication
             builder.Services.AddAuthentication().AddGoogle(GoogleOptions =>
             {
@@ -53,6 +81,9 @@ namespace GoogleAuthenticationDemoApp
 
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.MapOpenApi();
+                app.MapScalarApiReference();
+
                 //app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "Swagger"));
                 app.UseMigrationsEndPoint();
             }
